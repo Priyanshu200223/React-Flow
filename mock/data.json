@@ -1,0 +1,50 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "type": "defaultNode",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "data": {
+        "label": "HTTP Trigger",
+        "svg": "/assets/earth.svg",
+        "background": "#FFC061"
+      }
+    },
+    {
+      "id": "2",
+      "type": "defaultNode",
+      "position": {
+        "x": 0,
+        "y": 100
+      },
+      "data": {
+        "label": "SignUp Page",
+        "svg": "/assets/account.svg",
+        "background": "#7B61FF"
+      }
+    },
+    {
+      "id": "3",
+      "type": "defaultNode",
+      "position": {
+        "x": 100,
+        "y": 200
+      },
+      "data": {
+        "label": "Redirect User",
+        "svg": "/assets/navigation.svg",
+        "background": "#EC6B5E"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1-2",
+      "source": "1",
+      "target": "2"
+    }
+  ]
+}

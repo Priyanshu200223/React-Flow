@@ -1,6 +1,7 @@
 import App from 'next/app';
 import React from 'react';
 import "../styles/globals.css";
+import "../styles/react-flow.css"
 
 function MyApp({ Component, pageProps }) {
   // global styles, context providers, or other custom logic here

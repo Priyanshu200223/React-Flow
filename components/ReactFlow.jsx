@@ -4,16 +4,11 @@ import ReactFlow, { Background, Controls, applyNodeChanges, applyEdgeChanges } f
 import 'reactflow/dist/style.css';
 import "../styles/custom-node.module.css"
 import NodeWithAdornment from './flow-custom-components/nodeWithAdornment';
-
-const initialNodes = [
-  { id: '1', type: "defaultNode", position: { x: 0, y: 0 }, data: { label: '1' } },
-  { id: '2', type: "defaultNode", position: { x: 0, y: 100 }, data: { label: '2' } },
-];
-const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
+import nodeData from "../mock/data.json"
 
 export default function ReactFlowImpl() {
-  const [nodes, setNodes] = useState(initialNodes);
-  const [edges, setEdges] = useState(initialEdges);
+  const [nodes, setNodes] = useState(nodeData.nodes);
+  const [edges, setEdges] = useState(nodeData.edges);
 
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -27,11 +22,13 @@ export default function ReactFlowImpl() {
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
       <ReactFlow
+        style={{zIndex: -2}}
         nodes={nodes}
         edges={edges}
         nodeTypes={nodeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
+        fitView
       >
         <Background variant="dots" gap={12} size={1} />
         <Controls />
@@ -39,12 +36,6 @@ export default function ReactFlowImpl() {
     </div>
   );
 }
-
-// const nodeTypes = useMemo(() => {
-//   return {
-//     nodeWithAdornment: NodeWithAdornment
-//   }
-// }, [])
 
 const nodeTypes = {
   defaultNode: NodeWithAdornment
