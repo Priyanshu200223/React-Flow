@@ -10,7 +10,8 @@
       "data": {
         "label": "HTTP Trigger",
         "svg": "/assets/earth.svg",
-        "background": "#FFC061"
+        "background": "#FFC061",
+        "schema": "https://run.mocky.io/v3/d741b1dd-1b6b-44f9-a4c2-cdb5c48d71c9"
       }
     },
     {
@@ -18,25 +19,27 @@
       "type": "defaultNode",
       "position": {
         "x": 0,
-        "y": 100
+        "y": 150
       },
       "data": {
         "label": "SignUp Page",
         "svg": "/assets/account.svg",
-        "background": "#7B61FF"
+        "background": "#7B61FF",
+        "schema": "https://run.mocky.io/v3/90391684-e1f1-4d9e-966a-d1cb8e61d54a"
       }
     },
     {
       "id": "3",
       "type": "defaultNode",
       "position": {
-        "x": 100,
-        "y": 200
+        "x": 0,
+        "y": 300
       },
       "data": {
         "label": "Redirect User",
         "svg": "/assets/navigation.svg",
-        "background": "#EC6B5E"
+        "background": "#EC6B5E",
+        "schema": "https://run.mocky.io/v3/249dc575-ddb0-45ed-8106-a318e91ea321"
       }
     }
   ],

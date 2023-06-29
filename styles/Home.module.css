@@ -10,7 +10,9 @@
 .formWrapper {
   height: 100px;
   width: 100px;
-  border: 2px solid gray;
+  border-left: 2px solid gray;
+  border-bottom: 2px solid gray;
+  margin-top: 1px;
   position: absolute;
   right: 0px;
   z-index: 10;

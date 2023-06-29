@@ -20,7 +20,7 @@ export default function ReactFlowImpl() {
   );
 
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
+    <div style={{ width: '80vw', height: '100vh' }}>
       <ReactFlow
         style={{zIndex: -2}}
         nodes={nodes}

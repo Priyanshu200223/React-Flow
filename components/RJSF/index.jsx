@@ -1,13 +1,20 @@
-import Form from  "@rjsf/mui"
+import { CircularProgress } from "@mui/material";
+import Form from "@rjsf/mui"
 import validator from "@rjsf/validator-ajv8";
 
-export default function RJSFForm() {
+export default function RJSFForm({ schema, formData, onSubmit, onChange, isLoading }) {
+
+  if(isLoading) {
+    return <CircularProgress />
+  }
 
   return <Form
-    data={defaultData}
+    data={formData}
     schema={schema}
+    onChange={onChange}
     validator={validator}
-   ></Form>
+    onSubmit={onSubmit}
+  ></Form>
 }
 
 const schema = {
