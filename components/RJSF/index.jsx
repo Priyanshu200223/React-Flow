@@ -1,66 +1,20 @@
 import { CircularProgress } from "@mui/material";
 import Form from "@rjsf/mui"
 import validator from "@rjsf/validator-ajv8";
+import { useEffect, useState } from "react";
 
-export default function RJSFForm({ schema, formData, onSubmit, onChange, isLoading }) {
-
-  if(isLoading) {
-    return <CircularProgress />
-  }
+export default function RJSFForm({ schema, formData, onSubmit, onChange: onChangeCallback, isLoading }) {
+  const [rjsfFormData, setRjsfFormData] = useState(formData);
 
   return <Form
-    data={formData}
+    formData={rjsfFormData}
     schema={schema}
-    onChange={onChange}
+    onChange={(e) => {
+      setRjsfFormData(e.formData)
+      onChangeCallback(e.formData)
+    }}
     validator={validator}
+    noHtml5Validate
     onSubmit={onSubmit}
-  ></Form>
-}
-
-const schema = {
-  "title": "A registration form",
-  "description": "A simple form example.",
-  "type": "object",
-  "required": [
-    "firstName",
-    "lastName"
-  ],
-  "properties": {
-    "firstName": {
-      "type": "string",
-      "title": "First name",
-      "default": "Chuck"
-    },
-    "lastName": {
-      "type": "string",
-      "title": "Last name"
-    },
-    "age": {
-      "type": "integer",
-      "title": "Age"
-    },
-    "bio": {
-      "type": "string",
-      "title": "Bio"
-    },
-    "password": {
-      "type": "string",
-      "title": "Password",
-      "minLength": 3
-    },
-    "telephone": {
-      "type": "string",
-      "title": "Telephone",
-      "minLength": 10
-    }
-  }
-}
-
-const defaultData = {
-  "firstName": "Chuck",
-  "lastName": "Norris",
-  "age": 75,
-  "bio": "Roundhouse kicking asses since 1940",
-  "password": "noneed",
-  "telephone": "1-800-KICKASS"
+  ><></></Form>
 }
