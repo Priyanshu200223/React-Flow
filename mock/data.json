@@ -1,7 +1,7 @@
 {
   "nodes": [
     {
-      "id": "1",
+      "id": "http-trigger",
       "type": "defaultNode",
       "position": {
         "x": 0,
@@ -11,11 +11,12 @@
         "label": "HTTP Trigger",
         "svg": "/assets/earth.svg",
         "background": "#FFC061",
-        "schema": "https://run.mocky.io/v3/d741b1dd-1b6b-44f9-a4c2-cdb5c48d71c9"
+        "schema": "https://run.mocky.io/v3/9d4efd5f-af79-44d0-8ce4-dd4b8143b127",
+        "default_data": "https://run.mocky.io/v3/5e38222c-f08d-4669-96f0-c981db739122"
       }
     },
     {
-      "id": "2",
+      "id": "signup-page",
       "type": "defaultNode",
       "position": {
         "x": 0,
@@ -25,11 +26,12 @@
         "label": "SignUp Page",
         "svg": "/assets/account.svg",
         "background": "#7B61FF",
-        "schema": "https://run.mocky.io/v3/90391684-e1f1-4d9e-966a-d1cb8e61d54a"
+        "schema": "https://run.mocky.io/v3/81b7ea29-1909-4d8d-aa3d-f011d0b0e5e8",
+        "default_data": "https://run.mocky.io/v3/3431d72a-1ab9-4741-9d98-26c913765a0d"
       }
     },
     {
-      "id": "3",
+      "id": "redirect-url",
       "type": "defaultNode",
       "position": {
         "x": 0,
@@ -39,15 +41,16 @@
         "label": "Redirect User",
         "svg": "/assets/navigation.svg",
         "background": "#EC6B5E",
-        "schema": "https://run.mocky.io/v3/249dc575-ddb0-45ed-8106-a318e91ea321"
+        "schema": "https://run.mocky.io/v3/63a1aea1-0b5c-4911-9c1a-8b6ddafaffad",
+        "default_data": "https://run.mocky.io/v3/9b71b75d-ce7f-4ab3-b82b-74ce7037c0b6"
       }
     }
   ],
   "edges": [
     {
       "id": "e1-2",
-      "source": "1",
-      "target": "2"
+      "source": "http-trigger",
+      "target": "signup-page"
     }
   ]
 }

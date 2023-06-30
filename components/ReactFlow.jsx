@@ -6,7 +6,7 @@ import "../styles/custom-node.module.css"
 import NodeWithAdornment from './flow-custom-components/nodeWithAdornment';
 import nodeData from "../mock/data.json"
 import { useDispatch, useSelector } from 'react-redux';
-import { registerSchemaForNode, selectNode, setLoading } from '../redux/features/nodeData';
+import { registerSchemaForNode, selectNode, setFormData, setLoading } from '../redux/features/nodeData';
 import axios from "../api"
 
 export default function ReactFlowImpl() {
@@ -15,7 +15,7 @@ export default function ReactFlowImpl() {
   const flowState = useSelector(state => state.nodeData.flowData);
   const dispatch = useDispatch();
 
-  function handleClick(_, nodeData) {
+  async function handleClick(_, nodeData) {
     try {
       dispatch(setLoading(true))
 
@@ -29,17 +29,20 @@ export default function ReactFlowImpl() {
           }))
         } else {
           // register schema, as to prevent subsequent loading and dispatch action
-          axios.get(nodeData.data.schema).then((axiosRes) => {
-            dispatch(registerSchemaForNode({
-              id: nodeData.id,
-              schema: axiosRes.data
-            }))
-            dispatch(selectNode({
-              id: nodeData.id,
-              rjsfSchema: axiosRes.data
-            }))
-          })
-
+          const axiosRes = await axios.get(nodeData.data.schema)
+          const defaultData = await axios.get(nodeData.data.default_data);
+          dispatch(setFormData({
+            id: nodeData.id,
+            data: defaultData.data
+          }))
+          dispatch(registerSchemaForNode({
+            id: nodeData.id,
+            schema: axiosRes.data
+          }))
+          dispatch(selectNode({
+            id: nodeData.id,
+            rjsfSchema: axiosRes.data
+          }))
         }
       }
     } catch (e) {
