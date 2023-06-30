@@ -1,16 +1,14 @@
-import styles from '../styles/Home.module.css';
+import { Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import AppBarComponent from '../components/Appbar';
 import Drawer from '../components/Drawer';
-import ReactFlow from "../components/ReactFlow"
 import RJSFForm from '../components/RJSF';
-import { store } from "../redux/store"
-import { Provider } from 'react-redux';
-import { useSelector, useDispatch } from 'react-redux'
-import { useCallback, useEffect, useState } from 'react';
-import { seedFlowData } from "../redux/features/nodeData"
-import mockData from "../mock/data.json"
-import { Typography } from '@mui/material';
-
+import ReactFlow from "../components/ReactFlow";
+import mockData from "../mock/data.json";
+import { seedFlowData } from "../redux/features/nodeData";
+import { store } from "../redux/store";
+import styles from '../styles/Home.module.css';
 
 export default function ReduxProvider() {
   return (
@@ -20,24 +18,34 @@ export default function ReduxProvider() {
   )
 }
 
+let timer;
+
 function Home() {
   const selectedNode = useSelector(state => state.nodeData.selectedNode)
   const isLoading = useSelector(state => state.nodeData.isLoading)
   const formData = useSelector(state => state.nodeData.formData)
   const rjsfSchemaSet = useSelector(state => state.nodeData.rjsfSchema)
   const dispatch = useDispatch();
-  
   const [selectedRJSFSchema, setSelectedRJSFSchema] = useState(null);
-
-  useEffect(()=>{
-    const rjsfSchema = rjsfSchemaSet.find(schema => schema.id == selectedNode.id)
-    setSelectedRJSFSchema(rjsfSchema.schema)
-  },[selectedNode])
 
   // Fetches All the nodes required to rendered on React-FLow
   useEffect(function intialiseReduxDataStoreWithFlowInfo() {
     dispatch(seedFlowData(mockData))
   }, [])
+
+  // if a node is selected, then its respective rjsf schema has to be loaded
+  useEffect(() => {
+    const rjsfSchema = rjsfSchemaSet.find(schema => schema.id == selectedNode.id)
+    setSelectedRJSFSchema(rjsfSchema?.schema)
+  }, [selectedNode])
+
+  // a debounced data post effect that will keep the data up-to-date with server
+  useEffect(()=>{
+    clearTimeout(timer);
+    timer = setTimeout(function postCurrentFormData() {
+      console.log("posting data...", formData)
+    },1000)
+  },[formData])
 
   return (
     <div>
