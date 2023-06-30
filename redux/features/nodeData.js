@@ -13,7 +13,6 @@ export const nodeDataSlice = createSlice({
   initialState,
   reducers: {
     seedFlowData: function initialiseReduxStoreWithData(state, action) {
-      console.log("dispatched", state, action)
       // assumption, it is called only on load just to intialise the library
       state.flowData = action.payload;
     },
@@ -26,7 +25,7 @@ export const nodeDataSlice = createSlice({
       node.rjsfSchema = action.schema;
       allNodes.push(node)
 
-      state.flowData = allNodes;
+      state.flowData.nodes = allNodes;
     },
     selectNode: function setSelectNode(state, action) {
       const { id, rjsfSchema } = action.payload

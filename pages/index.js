@@ -32,7 +32,6 @@ function Home() {
   }, [])
 
   function handleChange(formData) {
-    console.log("formdata......", formData)
     dispatch(setFormData({
       id: selectedNode.id,
       data: formData
