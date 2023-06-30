@@ -5,7 +5,8 @@ const initialState = {
   flowData: null,
   selectedNode: null,
   isLoading: false,
-  formData: {}
+  formData: {},
+  rjsfSchema: []
 }
 
 export const nodeDataSlice = createSlice({
@@ -18,14 +19,7 @@ export const nodeDataSlice = createSlice({
     },
     registerSchemaForNode: function registerSchemaForNode(state, action) {
       const { id, schema } = action.payload;
-      let allNodes = [...state.flowData?.nodes || []]
-      const node = allNodes.find(node => node.id === id);
-      allNodes = allNodes.filter(node => node.id !== id); // remove the node to push it later
-
-      node.rjsfSchema = action.schema;
-      allNodes.push(node)
-
-      state.flowData.nodes = allNodes;
+      state.rjsfSchema = [...state.rjsfSchema, {id, schema}]
     },
     selectNode: function setSelectNode(state, action) {
       const { id, rjsfSchema } = action.payload

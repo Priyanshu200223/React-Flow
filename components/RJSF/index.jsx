@@ -1,8 +1,7 @@
 import { CircularProgress } from "@mui/material";
-import Form from "@rjsf/mui"
+import Form from "@rjsf/mui";
 import validator from "@rjsf/validator-ajv8";
-import { useState } from "react";
-import {  useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import { setFormData } from "../../redux/features/nodeData";
 
 /**
@@ -10,15 +9,14 @@ import { setFormData } from "../../redux/features/nodeData";
  * 
  * @param {{
  * schema: Object;
- * formData: Object;
  * onSubmit: Function;
  * isLoading: boolean;
  * }} param0 
  * @returns 
  */
-export default function RJSFForm({ schema, formData, onSubmit, isLoading }) {
-  const [rjsfFormData, setRjsfFormData] = useState(formData);
+export default function RJSFForm({ schema, onSubmit, isLoading }) {
   const selectedNode = useSelector(state => state.nodeData.selectedNode)
+  const formData = useSelector(state => state.nodeData.formData)
   const dispatch = useDispatch()
 
   if (!schema || isLoading) {
@@ -33,14 +31,13 @@ export default function RJSFForm({ schema, formData, onSubmit, isLoading }) {
   }
 
   return <Form
-    formData={rjsfFormData}
+    formData={formData[selectedNode.id]}
     schema={schema}
     onChange={(e) => {
-      setRjsfFormData(e.formData)
       onRJSFFormChangeCallback(e.formData)
     }}
     validator={validator}
     noHtml5Validate
     onSubmit={onSubmit}
-  />
+  ></Form>
 }

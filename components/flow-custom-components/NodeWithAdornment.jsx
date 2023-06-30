@@ -6,7 +6,6 @@ import { Typography } from '@mui/material';
 export function NodeComponent({ data, ...otherProps }) {
   return (
     <div
-      onClick={(data)=> console.log("clicked", {data, otherProps})}
       style={{ display: "flex", padding: "0.675rem", borderRadius: "8px", border: "2px solid #e2e2e2", alignItems: "center", minWidth: "240px", backgroundColor: "#fff" }}
     >
       <div style={{ borderRadius: 8, backgroundColor: data.background, marginRight: 8, height: 40, width: 40 }}>

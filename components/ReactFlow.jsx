@@ -13,37 +13,44 @@ export default function ReactFlowImpl() {
   const [nodes, setNodes] = useState(nodeData.nodes);
   const [edges, setEdges] = useState(nodeData.edges);
   const flowState = useSelector(state => state.nodeData.flowData);
+  const rjsfSchema = useSelector(state => state.nodeData.rjsfSchema);
   const dispatch = useDispatch();
 
-  async function handleClick(_, nodeData) {
+  /**
+   * initialises a node with the node-data by fetching the subsequent resources
+   *  
+   * @param {*} nodeData The node data, that would contain the high level node information
+   */
+  async function registerSchemaAndDispatchActions(nodeData) {
+    const axiosRes = await axios.get(nodeData.data.schema)
+    const defaultData = await axios.get(nodeData.data.default_data);
+    dispatch(setFormData({
+      id: nodeData.id,
+      data: defaultData.data
+    }))
+    dispatch(registerSchemaForNode({
+      id: nodeData.id,
+      schema: axiosRes.data
+    }))
+    dispatch(selectNode({
+      id: nodeData.id,
+      rjsfSchema: axiosRes.data
+    }))
+  }
+
+
+  async function handleNodeClick(_, nodeData) {
     try {
       dispatch(setLoading(true))
 
-      const id = nodeData.id;
-      if (flowState.nodes) {
-        const nodeData = flowState.nodes.find(node => node.id === id);
-        if (nodeData.rjsfSchema) {
-          dispatch(selectNode({
-            id: nodeData.id,
-            rjsfSchema: nodeData.rjsfSchema
-          }))
-        } else {
-          // register schema, as to prevent subsequent loading and dispatch action
-          const axiosRes = await axios.get(nodeData.data.schema)
-          const defaultData = await axios.get(nodeData.data.default_data);
-          dispatch(setFormData({
-            id: nodeData.id,
-            data: defaultData.data
-          }))
-          dispatch(registerSchemaForNode({
-            id: nodeData.id,
-            schema: axiosRes.data
-          }))
-          dispatch(selectNode({
-            id: nodeData.id,
-            rjsfSchema: axiosRes.data
-          }))
-        }
+      const isSchemaAvailable = rjsfSchema.find(schema => schema.id == nodeData.id)
+      if (isSchemaAvailable) {
+        dispatch(selectNode({
+          id: nodeData.id,
+          rjsfSchema: nodeData.rjsfSchema
+        }))
+      } else {
+        await registerSchemaAndDispatchActions(nodeData);
       }
     } catch (e) {
       // TODO handle gracefully
@@ -73,7 +80,7 @@ export default function ReactFlowImpl() {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         fitView
-        onNodeClick={handleClick}
+        onNodeClick={handleNodeClick}
       >
         <Background variant="dots" gap={12} size={1} />
         <Controls />
